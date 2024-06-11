@@ -1,0 +1,9 @@
+-1,石
+0,画像なしセル
+1~8,数字セル
+9,石＋?
+10,石＋旗
+11,ボムセル
+
+const [samplePos, setSamplePos] = useState(0);
+  console.log(samplePos);
