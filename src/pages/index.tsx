@@ -87,11 +87,17 @@ const Home = () => {
       initializeBombs(x, y, newbombMap);
       counter(newbombMap);
     }
-    console.log('new');
-    console.log(newbombMap);
-
     newuserInputs[y][x] = 1;
     setUserInputs(newuserInputs);
+  };
+
+  const clickR = (x: number, y: number,event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const newuserInputs = structuredClone(userInputs);
+    if (newuserInputs[y][x] === 0) {
+      newuserInputs[y][x] = 2;
+      setUserInputs(newuserInputs);
+    }
   };
 
   return (
@@ -117,11 +123,12 @@ const Home = () => {
                     }}
                     key={`${x}-${y}`}
                     onClick={() => clickHandler(x, y)}
+                    onContextMenu={(event) => clickR(x, y, event)}
                   >
                     <div
                       className={styles.flagStyle}
                       style={{
-                        backgroundPosition: `${{ 0: 30, 1: 30, 2: -230, 3: -270 }[userInputs[y][x]]}px 0px`,
+                        backgroundPosition: `${{ 0: 30, 1: 30, 2: -242, 3: -270 }[userInputs[y][x]]}px 0px`,
                       }}
                     />
                   </div>
