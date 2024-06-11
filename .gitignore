@@ -33,3 +33,5 @@ npm-debug.log*
 
 # vercel
 .vercel
+
+src/memo.txt
