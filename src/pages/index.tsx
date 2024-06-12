@@ -12,6 +12,12 @@ const Home = () => {
     [0, 1],
     [-1, 1],
   ];
+  const filldirections = [
+    [-1, 0],
+    [0, -1],
+    [1, 0],
+    [0, 1],
+  ];
   const [userInputs, setUserInputs] = useState<(0 | 1 | 2 | 3)[][]>([
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -45,6 +51,7 @@ const Home = () => {
   const checkXY = (X: number, Y: number) => {
     return [X < 0, X >= 9, Y < 0, Y >= 9].some((element) => element);
   };
+
   const counter = (board: number[][]) => {
     [...Array(9)].map((_, x) => {
       [...Array(9)].map((_, y) => {
@@ -61,11 +68,11 @@ const Home = () => {
         });
       });
     });
-
     setBombMap(board);
   };
+
   const initializeBombs = (x: number, y: number, board: number[][]) => {
-    while (board.flat().filter((number) => number === 10).length < 10) {
+    while (board.flat().filter((number) => number === 10).length < bombConst) {
       const Y = Math.floor(Math.random() * 9);
       const X = Math.floor(Math.random() * 9);
       if ([Y === y, X === x].every((element) => element)) {
@@ -82,22 +89,43 @@ const Home = () => {
     console.log(x, y);
     const newuserInputs = structuredClone(userInputs);
     const newbombMap = structuredClone(bombMap);
+    const fill = (x: number, y: number) => {
+      if (newuserInputs[y][x] === 0) {
+        newuserInputs[y][x] = 1;
+      }
+      if (newbombMap[y][x] === -1) {
+        newbombMap[y][x] = -2;
+        filldirections.map(([a, b]) => {
+          const X = a + x;
+          const Y = b + y;
+          if (!checkXY(X, Y)) {
+            fill(X, Y);
+          }
+        });
+      }
+    };
+
     //console.log(bombMap);
     if (bombMap.flat().filter((a) => a === 10).length === 0) {
       initializeBombs(x, y, newbombMap);
       counter(newbombMap);
     }
-    newuserInputs[y][x] = 1;
+
+    fill(x, y);
     setUserInputs(newuserInputs);
+    setBombMap(newbombMap);
   };
 
-  const clickR = (x: number, y: number,event: React.MouseEvent<HTMLDivElement>) => {
+  const clickR = (x: number, y: number, event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     const newuserInputs = structuredClone(userInputs);
-    if (newuserInputs[y][x] === 0) {
-      newuserInputs[y][x] = 2;
-      setUserInputs(newuserInputs);
+    const num = newuserInputs[y][x];
+    if (num === 0) {
+      newuserInputs[y][x] = 3;
+    } else if (num === 3) {
+      newuserInputs[y][x] = 0;
     }
+    setUserInputs(newuserInputs);
   };
 
   return (
@@ -118,7 +146,7 @@ const Home = () => {
                   <div
                     className={styles.tileStyle}
                     style={{
-                      border: [undefined, '0px'][0],
+                      border: [undefined, '0px'][number],
                       background: ['#c6c6c6', 'transparent'][1],
                     }}
                     key={`${x}-${y}`}
