@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import styles from './index.module.css';
 
 const Home = () => {
@@ -34,8 +34,7 @@ const Home = () => {
   // 2 -> はてな
   // 3 -> 旗
   const bombConst = 10;
-  // -1 -> ボム無し
-  // 10 -> ボム有り
+
   const [bombMap, setBombMap] = useState([
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
@@ -47,6 +46,56 @@ const Home = () => {
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
   ]);
+  // -1 -> ボム無し
+  // 10 -> ボム有り
+
+  const defaultBomb = [
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+  ];
+
+  const defaultInput: 0[][] = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ];
+
+  const [time, setTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const intervalRef = useRef(null);
+
+  const handleStart = () => {
+    setIsRunning(true);
+    intervalRef.current = setInterval(() => {
+      setTime((prevTime) => prevTime + 10);
+    }, 10);
+  };
+
+  const handlePause = () => {
+    clearInterval(intervalRef.current);
+    setIsRunning(false);
+  };
+
+  const handleReset = () => {
+    clearInterval(intervalRef.current);
+    setIsRunning(false);
+    setTime(0);
+  };
+
+  const seconds = `0${Math.floor(time / 1000) % 60}`.slice(-2);
 
   const checkXY = (X: number, Y: number) => {
     return [X < 0, X >= 9, Y < 0, Y >= 9].some((element) => element);
@@ -85,10 +134,18 @@ const Home = () => {
     setBombMap(board);
   };
 
-  const clickHandler = (x: number, y: number) => {
+  const count = bombConst - userInputs.flat().filter((number) => number === 3).length;
+
+  const isGameEnd =
+    userInputs.flat().filter((number) => number === 0).length +
+      userInputs.flat().filter((number) => number === 3).length ===
+    bombConst;
+
+  const clickL = (x: number, y: number) => {
     console.log(x, y);
     const newuserInputs = structuredClone(userInputs);
     const newbombMap = structuredClone(bombMap);
+
     const fill = (x: number, y: number) => {
       if (newuserInputs[y][x] === 0) {
         newuserInputs[y][x] = 1;
@@ -105,16 +162,37 @@ const Home = () => {
       }
     };
 
+    const endGame = () => {
+      bombMap.map((row, y) => {
+        row.map((number, x) => {
+          if (number === 10) {
+            console.log(x, y);
+            newuserInputs[y][x] = 1;
+            setUserInputs(newuserInputs);
+          }
+        });
+      });
+    };
+
+    // ここからメイン
     //console.log(bombMap);
     if (bombMap.flat().filter((a) => a === 10).length === 0) {
       initializeBombs(x, y, newbombMap);
       counter(newbombMap);
+      handleStart();
+    }
+
+    if (newbombMap[y][x] === 10) {
+      endGame();
     }
 
     fill(x, y);
     setUserInputs(newuserInputs);
     setBombMap(newbombMap);
   };
+  if (isGameEnd) {
+    console.log('Grate');
+  }
 
   const clickR = (x: number, y: number, event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -123,15 +201,33 @@ const Home = () => {
     if (num === 0) {
       newuserInputs[y][x] = 3;
     } else if (num === 3) {
+      newuserInputs[y][x] = 2;
+    } else if (num === 2) {
       newuserInputs[y][x] = 0;
     }
     setUserInputs(newuserInputs);
   };
 
+  const reloadPage = () => {
+    setBombMap(defaultBomb);
+    setUserInputs(defaultInput);
+    handleReset();
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.board}>
-        <div className={styles.countStyle} />
+        <div className={styles.topStyle}>
+          <div className={styles.countStyle}>{String(count).padStart(3, '0')}</div>
+          <div
+            className={styles.faceStyle}
+            style={{
+              backgroundPosition: `${-440}px 0px`,
+            }}
+            onClick={() => reloadPage()}
+          />
+          <div className={styles.timerStyle}>{String(seconds).padStart(3, '0')}</div>
+        </div>
         <div className={styles.gameStyle}>
           <div className={styles.boardStyle}>
             {userInputs.map((row, y) =>
@@ -139,7 +235,8 @@ const Home = () => {
                 <div
                   className={styles.numStyle}
                   style={{
-                    backgroundPosition: `${-29.8 * bombMap[y][x]}px 1.5px`,
+                    backgroundPosition: `${-29.8 * bombMap[y][x]}px 1.7px`,
+                    backgroundColor: `${{ 0: '#c6c6c6', 11: 'red' }[bombMap[y][x] + 1]}`,
                   }}
                   key={`${x}-${y}`}
                 >
@@ -147,16 +244,16 @@ const Home = () => {
                     className={styles.tileStyle}
                     style={{
                       border: [undefined, '0px'][number],
-                      background: ['#c6c6c6', 'transparent'][1],
+                      background: ['#c6c6c6', 'transparent'][number],
                     }}
                     key={`${x}-${y}`}
-                    onClick={() => clickHandler(x, y)}
+                    onClick={() => clickL(x, y)}
                     onContextMenu={(event) => clickR(x, y, event)}
                   >
                     <div
                       className={styles.flagStyle}
                       style={{
-                        backgroundPosition: `${{ 0: 30, 1: 30, 2: -242, 3: -270 }[userInputs[y][x]]}px 0px`,
+                        backgroundPosition: `${{ 0: 30, 1: 30, 2: -184, 3: -207 }[userInputs[y][x]]}px 1.5px`,
                       }}
                     />
                   </div>

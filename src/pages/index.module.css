@@ -1,3 +1,5 @@
+@import url('https://cdn.jsdelivr.net/npm/dseg@0.46.0/css/dseg.min.css');
+
 .container {
   display: flex;
   flex-direction: column;
@@ -19,8 +21,10 @@
   border: outset 10px white;
 }
 
-.countStyle {
+.topStyle {
   display: flex;
+  align-items: center;
+  justify-content: space-around;
   width: 333px;
   height: 79px;
   border: inset 8px white;
@@ -63,7 +67,50 @@
 }
 
 .flagStyle {
-  width: 30px;
-  height: 30px;
+  display: flex;
+  width: 25px;
+  height: 25px;
   background: url(../assets/images/icons.png) no-repeat;
+  background-size: 325px;
+}
+
+.faceStyle {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  background: url(../assets/images/icons.png) no-repeat;
+  background-size: 560px;
+  border: outset 5px white;
+}
+
+.faceStyle:active {
+  border: outset 5px #898989;
+}
+
+.countStyle {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 50px;
+  font-family: 'DSEG7-Classic-MINI', sans-serif;
+  font-size: 29px;
+  font-weight: bold;
+  color: red;
+  letter-spacing: 0;
+  background-color: black;
+  border: inset 5px white;
+}
+
+.timerStyle {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 50px;
+  font-family: 'DSEG7-Classic-MINI', sans-serif;
+  font-size: 29px;
+  font-weight: bold;
+  color: red;
+  letter-spacing: 0;
+  background-color: black;
+  border: inset 5px white;
 }
