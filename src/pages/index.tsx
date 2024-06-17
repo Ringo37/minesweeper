@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './index.module.css';
 
 const Home = () => {
@@ -74,28 +74,19 @@ const Home = () => {
   ];
 
   const [time, setTime] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
-  const intervalRef = useRef(null);
+  const [paused, setPaused] = useState(true);
 
-  const handleStart = () => {
-    setIsRunning(true);
-    intervalRef.current = setInterval(() => {
-      setTime((prevTime) => prevTime + 10);
-    }, 10);
-  };
-
-  const handlePause = () => {
-    clearInterval(intervalRef.current);
-    setIsRunning(false);
-  };
-
-  const handleReset = () => {
-    clearInterval(intervalRef.current);
-    setIsRunning(false);
-    setTime(0);
-  };
-
-  const seconds = `0${Math.floor(time / 1000) % 60}`.slice(-2);
+  useEffect(() => {
+    if (paused) {
+      return;
+    }
+    const timerId = setInterval(() => {
+      setTime((c) => c + 1);
+    }, 1000);
+    return () => {
+      clearInterval(timerId);
+    };
+  }, [paused]);
 
   const checkXY = (X: number, Y: number) => {
     return [X < 0, X >= 9, Y < 0, Y >= 9].some((element) => element);
@@ -179,7 +170,7 @@ const Home = () => {
     if (bombMap.flat().filter((a) => a === 10).length === 0) {
       initializeBombs(x, y, newbombMap);
       counter(newbombMap);
-      handleStart();
+      setPaused(false);
     }
 
     if (newbombMap[y][x] === 10) {
@@ -211,7 +202,8 @@ const Home = () => {
   const reloadPage = () => {
     setBombMap(defaultBomb);
     setUserInputs(defaultInput);
-    handleReset();
+    setPaused(true);
+    setTime(0);
   };
 
   return (
@@ -226,7 +218,7 @@ const Home = () => {
             }}
             onClick={() => reloadPage()}
           />
-          <div className={styles.timerStyle}>{String(seconds).padStart(3, '0')}</div>
+          <div className={styles.timerStyle}>{String(time).padStart(3, '0')}</div>
         </div>
         <div className={styles.gameStyle}>
           <div className={styles.boardStyle}>
@@ -244,7 +236,7 @@ const Home = () => {
                     className={styles.tileStyle}
                     style={{
                       border: [undefined, '0px'][number],
-                      background: ['#c6c6c6', 'transparent'][number],
+                      background: ['#c6c6c6', 'transparent'][1],
                     }}
                     key={`${x}-${y}`}
                     onClick={() => clickL(x, y)}
