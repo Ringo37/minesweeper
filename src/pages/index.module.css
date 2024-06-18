@@ -1,4 +1,4 @@
-@import url('https://cdn.jsdelivr.net/npm/dseg@0.46.0/css/dseg.min.css');
+@import "dseg/css/dseg.css";
 
 .container {
   display: flex;
