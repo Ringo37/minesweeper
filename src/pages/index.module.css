@@ -1,9 +1,4 @@
-@font-face {
-  font-family: 'DSEG7-Classic-MINI';
-  font-style: normal;
-  font-weight: bold;
-  src: url('../assets/fonts/DSEG7ClassicMini-Bold.woff2')
-}
+@import url('https://cdn.jsdelivr.net/npm/dseg@0.46.0/css/dseg.min.css');
 
 .container {
   display: flex;
@@ -41,7 +36,7 @@
   justify-content: center;
   width: 35px;
   height: 35px;
-  background: url(../assets/images/icons.png) no-repeat;
+  background: url(~/src/assets/images/icons.png) no-repeat;
   background-color: #c6c6c6;
   border: solid 1.5px #898989;
 }
@@ -75,7 +70,7 @@
   display: flex;
   width: 25px;
   height: 25px;
-  background: url(../assets/images/icons.png) no-repeat;
+  background: url(~/src/assets/images/icons.png) no-repeat;
   background-size: 325px;
 }
 
@@ -83,7 +78,7 @@
   display: flex;
   width: 50px;
   height: 50px;
-  background: url(../assets/images/icons.png) no-repeat;
+  background: url(~/src/assets/images/icons.png) no-repeat;
   background-size: 560px;
   border: outset 5px white;
 }
