@@ -225,14 +225,24 @@ const Home = () => {
         </div>
         <div className={styles.levelCustom}>
           <label>X</label>
-          <input placeholder="X" value={customX} onChange={(e) => setCustomX(Number(e.target.value))} />
+          <input
+            placeholder="X"
+            value={customX}
+            onChange={(e) => setCustomX(Number(e.target.value))}
+          />
           <label>Y</label>
-          <input placeholder="Y" value={customY} onChange={(e) => setCustomY(Number(e.target.value))} />
+          <input
+            placeholder="Y"
+            value={customY}
+            onChange={(e) => setCustomY(Number(e.target.value))}
+          />
           <label>Bomb</label>
-          <input placeholder="Bomb" value={customBombs} onChange={(e) => setCustomBombs(Number(e.target.value))} />
-          <button onClick={custom}>
-            カスタム
-          </button>
+          <input
+            placeholder="Bomb"
+            value={customBombs}
+            onChange={(e) => setCustomBombs(Number(e.target.value))}
+          />
+          <button onClick={custom}>カスタム</button>
         </div>
       </div>
       <div
