@@ -222,13 +222,13 @@ const Home = () => {
           <button onClick={exp}>上級</button>
         </div>
         <div className={styles.levelCustom}>
-          <label>X</label>
+          <label>たて</label>
           <input
             placeholder="X"
             value={customX}
             onChange={(e) => setCustomX(Number(e.target.value))}
           />
-          <label>Y</label>
+          <label>よこ</label>
           <input
             placeholder="Y"
             value={customY}
