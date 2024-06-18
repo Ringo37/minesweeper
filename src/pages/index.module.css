@@ -42,7 +42,6 @@
 }
 
 .gameStyle {
-  display: flex;
   width: 331px;
   height: 331px;
   border: inset 8px white;
@@ -58,6 +57,7 @@
 
 .tileStyle {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   width: 35px;
@@ -113,4 +113,31 @@
   letter-spacing: 0;
   background-color: black;
   border: inset 5px white;
+}
+
+.level {
+  display: flex;
+  width: 80px;
+  height: 30px;
+  border: 5px black;
+}
+
+.levelCustom {
+  display: flex;
+  width: 80px;
+  height: 30px;
+  border: 5px black;
+}
+
+.levelMom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 900px;
+  height: 30px;
+}
+
+.button {
+  padding: 25px;
 }
