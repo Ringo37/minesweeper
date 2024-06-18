@@ -138,6 +138,25 @@
   height: 30px;
 }
 
-.button {
-  padding: 25px;
+.levelCustom label {
+  margin-right: 5px;
+  font-size: 16px; /* ラベルのフォントサイズを調整 */
+}
+
+.levelCustom input {
+  width: 40px; /* 入力フィールドの幅を調整 */
+  height: 30px; /* 入力フィールドの高さを調整 */
+  margin-right: 10px;
+  font-size: 16px; /* 入力フィールドのフォントサイズを調整 */
+  text-align: center;
+}
+
+.levelCustom button {
+  width: 800px; /* ボタンの幅を調整 */
+  height: 35px; /* ボタンの高さを調整 */
+  margin-left: 10px; /* ボタンの左側に余白を追加 */
+  font-size: 10px;
+  writing-mode: horizontal-tb; /* これが重要 */
+  transform: rotate(0);
+  white-space: nowrap;
 }

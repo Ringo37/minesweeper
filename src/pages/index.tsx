@@ -180,19 +180,32 @@ const Home = () => {
   };
   const [failGame, setFail] = useState(false);
 
+  const [customX, setCustomX] = useState(9);
+  const [customY, setCustomY] = useState(9);
+  const [customBombs, setCustomBombs] = useState(10);
+
   const beg = () => {
     setLevel([10, 9, 9]);
+    setPaused(true);
+    setTime(0);
   };
   const itm = () => {
     setLevel([40, 16, 16]);
+    setPaused(true);
+    setTime(0);
   };
   const exp = () => {
     setLevel([99, 30, 16]);
+    setPaused(true);
+    setTime(0);
   };
   const custom = () => {
-    setLevel;
+    if (customY * customX > customBombs) {
+      setLevel([customBombs, customY, customX]);
+      setPaused(true);
+      setTime(0);
+    }
   };
-
   useEffect(() => {
     setBombMap([...Array(level[2])].map(() => [...Array(level[1])].map(() => -1)));
     setUserInputs([...Array(level[2])].map(() => [...Array(level[1])].map(() => 0)));
@@ -212,12 +225,12 @@ const Home = () => {
         </div>
         <div className={styles.levelCustom}>
           <label>X</label>
-          <input size="2" />
+          <input placeholder="X" value={customX} onChange={(e) => setCustomX(Number(e.target.value))} />
           <label>Y</label>
-          <input size="2" />
+          <input placeholder="Y" value={customY} onChange={(e) => setCustomY(Number(e.target.value))} />
           <label>Bomb</label>
-          <input size="2" />
-          <button className={styles.button} onClick={custom}>
+          <input placeholder="Bomb" value={customBombs} onChange={(e) => setCustomBombs(Number(e.target.value))} />
+          <button onClick={custom}>
             カスタム
           </button>
         </div>
@@ -229,10 +242,12 @@ const Home = () => {
           height: `${200 + 35 * level[2]}px`,
         }}
       >
-        <div className={styles.topStyle}
-        style={{
-          width: `${35.8 * level[1]}px`,
-        }}>
+        <div
+          className={styles.topStyle}
+          style={{
+            width: `${35.8 * level[1]}px`,
+          }}
+        >
           <div className={styles.countStyle}>{String(count).padStart(3, '0')}</div>
           <div
             className={styles.faceStyle}
