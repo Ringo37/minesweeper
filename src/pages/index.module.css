@@ -1,4 +1,9 @@
-@import url("https://cdn.jsdelivr.net/npm/dseg@0.46.0/css/dseg.min.css");
+@font-face {
+  font-family: 'DSEG7-Classic-MINI';
+  font-style: normal;
+  font-weight: bold;
+  src: url('../assets/fonts/DSEG7ClassicMini-Bold.woff2')
+}
 
 .container {
   display: flex;
