@@ -140,23 +140,23 @@
 
 .levelCustom label {
   margin-right: 5px;
-  font-size: 16px; /* ラベルのフォントサイズを調整 */
+  font-size: 16px;
 }
 
 .levelCustom input {
-  width: 40px; /* 入力フィールドの幅を調整 */
-  height: 30px; /* 入力フィールドの高さを調整 */
+  width: 40px;
+  height: 30px;
   margin-right: 10px;
-  font-size: 16px; /* 入力フィールドのフォントサイズを調整 */
+  font-size: 16px;
   text-align: center;
 }
 
 .levelCustom button {
-  width: 800px; /* ボタンの幅を調整 */
-  height: 35px; /* ボタンの高さを調整 */
-  margin-left: 10px; /* ボタンの左側に余白を追加 */
+  width: 800px;
+  height: 35px;
+  margin-left: 10px;
   font-size: 10px;
-  writing-mode: horizontal-tb; /* これが重要 */
-  transform: rotate(0);
   white-space: nowrap;
+  writing-mode: horizontal-tb;
+  transform: rotate(0);
 }
