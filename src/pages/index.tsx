@@ -248,8 +248,8 @@ const Home = () => {
       <div
         className={styles.board}
         style={{
-          width: `${130 + 35 * level[1]}px`,
-          height: `${200 + 35 * level[2]}px`,
+          width: `${70 + 35.8 * level[1]}px`,
+          height: `${200 + 35.8 * level[2]}px`,
         }}
       >
         <div
