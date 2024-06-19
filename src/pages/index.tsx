@@ -222,28 +222,26 @@ const Home = () => {
           <button onClick={exp}>上級</button>
         </div>
       </div>
-      <div className={styles.levelMom}>
-        <div className={styles.levelCustom}>
-          <label>たて</label>
-          <input
-            placeholder="X"
-            value={customX}
-            onChange={(e) => setCustomX(Number(e.target.value))}
-          />
-          <label>よこ</label>
-          <input
-            placeholder="Y"
-            value={customY}
-            onChange={(e) => setCustomY(Number(e.target.value))}
-          />
-          <label>爆弾</label>
-          <input
-            placeholder="Bomb"
-            value={customBombs}
-            onChange={(e) => setCustomBombs(Number(e.target.value))}
-          />
-          <button onClick={custom}>カスタム</button>
-        </div>
+      <div className={styles.levelCustom}>
+        <label>たて</label>
+        <input
+          placeholder="X"
+          value={customX}
+          onChange={(e) => setCustomX(Number(e.target.value))}
+        />
+        <label>よこ</label>
+        <input
+          placeholder="Y"
+          value={customY}
+          onChange={(e) => setCustomY(Number(e.target.value))}
+        />
+        <label>爆弾</label>
+        <input
+          placeholder="Bomb"
+          value={customBombs}
+          onChange={(e) => setCustomBombs(Number(e.target.value))}
+        />
+        <button onClick={custom}>カスタム</button>
       </div>
       <div
         className={styles.board}
