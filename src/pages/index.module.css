@@ -18,7 +18,7 @@
   width: 400px;
   height: 500px;
   background-color: #c6c6c6;
-  border: outset 10px white;
+  border: outset 10px rgb(220, 220, 220);
 }
 
 .topStyle {
