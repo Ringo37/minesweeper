@@ -161,8 +161,6 @@ const Home = () => {
     if (num === 0 && !isGameClear && !failGame) {
       newuserInputs[y][x] = 3;
     } else if (num === 3) {
-      newuserInputs[y][x] = 2;
-    } else if (num === 2) {
       newuserInputs[y][x] = 0;
     }
     setUserInputs(newuserInputs);
