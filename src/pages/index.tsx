@@ -12,12 +12,6 @@ const Home = () => {
     [0, 1],
     [-1, 1],
   ];
-  const filldirections = [
-    [-1, 0],
-    [0, -1],
-    [1, 0],
-    [0, 1],
-  ];
   const [level, setLevel] = useState([10, 9, 9]);
   const [userInputs, setUserInputs] = useState<(0 | 1 | 2 | 3)[][]>(
     [...Array(level[2])].map(() => [...Array(level[1])].map(() => 0)),
@@ -106,7 +100,7 @@ const Home = () => {
       }
       if (newbombMap[y][x] === -1) {
         newbombMap[y][x] = -2;
-        filldirections.map(([a, b]) => {
+        directions.map(([a, b]) => {
           const X = a + x;
           const Y = b + y;
           if (!checkXY(X, Y)) {
@@ -129,6 +123,7 @@ const Home = () => {
       });
     };
 
+
     // ここからメイン
     //console.log(bombMap);
     if (bombMap.flat().filter((a) => a === 10).length === 0) {
@@ -146,6 +141,8 @@ const Home = () => {
       endGame();
       setPaused(true);
       setFail(true);
+      newbombMap[y][x] += 1;
+      setBombMap(newbombMap);
     }
     if (!isGameClear && !failGame && newuserInputs[y][x] !== 3 && newuserInputs[y][x] !== 2) {
       fill_cell(x, y);
@@ -186,22 +183,26 @@ const Home = () => {
     setLevel([10, 9, 9]);
     setPaused(true);
     setTime(0);
+    reloadPage();
   };
   const itm = () => {
     setLevel([40, 16, 16]);
     setPaused(true);
     setTime(0);
+    reloadPage();
   };
   const exp = () => {
     setLevel([99, 30, 16]);
     setPaused(true);
     setTime(0);
+    reloadPage();
   };
   const custom = () => {
     if (customY * customX > customBombs) {
       setLevel([customBombs, customY, customX]);
       setPaused(true);
       setTime(0);
+      reloadPage();
     }
   };
   useEffect(() => {
@@ -209,6 +210,18 @@ const Home = () => {
     setUserInputs([...Array(level[2])].map(() => [...Array(level[1])].map(() => 0)));
   }, [level]);
 
+  if (isGameClear){
+    const newuserInputs = structuredClone(userInputs);
+      newuserInputs.map((row, y) => {
+        row.map((number, x) => {
+          if (number === 0) {
+            //console.log(x, y);
+            newuserInputs[y][x] = 3;
+            setUserInputs(newuserInputs);
+          }
+        });
+      });
+  }
   return (
     <div className={styles.container}>
       <div className={styles.levelMom}>
@@ -285,8 +298,8 @@ const Home = () => {
                 <div
                   className={styles.numStyle}
                   style={{
-                    backgroundPosition: `${-29.8 * bombMap[y][x]}px 1.7px`,
-                    backgroundColor: `${{ 0: '#c6c6c6', 11: 'red' }[bombMap[y][x] + 1]}`,
+                    backgroundPosition: `${bombMap[y][x] === 11 ? -297 : -29.8 * bombMap[y][x]}px 1.7px`,
+                    backgroundColor: `${{ 0: '#c6c6c6', 12: 'red' }[bombMap[y][x] + 1]}`,
                   }}
                   key={`${x}-${y}`}
                 >
