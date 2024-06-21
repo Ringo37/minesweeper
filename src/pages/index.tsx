@@ -260,7 +260,7 @@ const Home = () => {
           <div
             className={styles.faceStyle}
             style={{
-              backgroundPosition: `${isGameClear ? -480 : failGame ? -520 : -440}px 0px`,
+              backgroundPosition: `${failGame ? -520 : isGameClear ? -480 : -440}px 0px`,
             }}
             onClick={() => reloadPage()}
           />
