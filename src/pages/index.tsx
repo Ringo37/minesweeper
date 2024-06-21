@@ -123,7 +123,6 @@ const Home = () => {
       });
     };
 
-
     // ここからメイン
     //console.log(bombMap);
     if (bombMap.flat().filter((a) => a === 10).length === 0) {
@@ -210,17 +209,17 @@ const Home = () => {
     setUserInputs([...Array(level[2])].map(() => [...Array(level[1])].map(() => 0)));
   }, [level]);
 
-  if (isGameClear){
+  if (isGameClear) {
     const newuserInputs = structuredClone(userInputs);
-      newuserInputs.map((row, y) => {
-        row.map((number, x) => {
-          if (number === 0) {
-            //console.log(x, y);
-            newuserInputs[y][x] = 3;
-            setUserInputs(newuserInputs);
-          }
-        });
+    newuserInputs.map((row, y) => {
+      row.map((number, x) => {
+        if (number === 0) {
+          //console.log(x, y);
+          newuserInputs[y][x] = 3;
+          setUserInputs(newuserInputs);
+        }
       });
+    });
   }
   return (
     <div className={styles.container}>
