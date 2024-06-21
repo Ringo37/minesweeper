@@ -246,14 +246,14 @@ const Home = () => {
       <div
         className={styles.board}
         style={{
-          width: `${level[1]>=9 ? 70 + 35.8 * level[1] : 356.4}px`,
+          width: `${level[1] >= 9 ? 70 + 35.8 * level[1] : 356.4}px`,
           height: `${200 + 35.8 * level[2]}px`,
         }}
       >
         <div
           className={styles.topStyle}
           style={{
-            width: `${level[1]>=9 ? 35.8 * level[1] : 296.4}px`,
+            width: `${level[1] >= 9 ? 35.8 * level[1] : 296.4}px`,
           }}
         >
           <div className={styles.countStyle}>{String(count).padStart(3, '0')}</div>
