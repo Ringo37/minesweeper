@@ -26,6 +26,7 @@ const Home = () => {
   );
   // -1 -> ボム無し
   // 10 -> ボム有り
+  // 11 -> ボム旗あり
 
   const defaultBomb = [...Array(level[2])].map(() => [...Array(level[1])].map(() => -1));
   const defaultInput: 0[][] = [...Array(level[2])].map(() => [...Array(level[1])].map(() => 0));
@@ -209,7 +210,7 @@ const Home = () => {
     setUserInputs([...Array(level[2])].map(() => [...Array(level[1])].map(() => 0)));
   }, [level]);
 
-  if (isGameClear) {
+  if (isGameClear && !failGame) {
     const newuserInputs = structuredClone(userInputs);
     newuserInputs.map((row, y) => {
       row.map((number, x) => {
